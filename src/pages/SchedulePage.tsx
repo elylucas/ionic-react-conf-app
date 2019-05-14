@@ -31,11 +31,6 @@ class SchedulePage extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-
-    props.updateLocations();
-    props.updateSessions();
-    props.updateSpeakers();
-
     this.ionRefresherRef = React.createRef<HTMLIonRefresherElement>();
     this.ionFabRef = React.createRef<HTMLIonFabElement>();
   }
@@ -191,9 +186,6 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = {
-  updateLocations: () => actions.locations.updateLocations(),
-  updateSessions: () => actions.sessions.updateSessions(),
-  updateSpeakers: () => actions.speakers.updateSpeakers(),
   setSearchText: (searchText: string) => actions.sessions.setSearchText(searchText),
   updateTrackFilters: (trackList: string[]) => actions.sessions.updateTrackFilters(trackList)
 }
