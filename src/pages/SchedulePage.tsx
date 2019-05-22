@@ -3,30 +3,67 @@ import { connect } from 'react-redux';
 import { RootState, selectors, actions } from '../store';
 import SessionList from '../components/SessionList';
 import SessionListFilter from '../components/SessionListFilter';
-import { withRouter, RouteComponentProps } from "react-router";
-import { IonModal, IonLoading, IonToast, IonIcon, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonSegment, IonSegmentButton, IonButton, IonSearchbar, IonContent, IonRefresher, IonRefresherContent, IonFab, IonFabList, IonFabButton, IonAlert } from '@ionic/react';
+import { withRouter, RouteComponentProps } from 'react-router';
+import {
+  IonModal,
+  IonLoading,
+  IonToast,
+  IonIcon,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonMenuButton,
+  IonSegment,
+  IonSegmentButton,
+  IonButton,
+  IonSearchbar,
+  IonContent,
+  IonRefresher,
+  IonRefresherContent,
+  IonFab,
+  IonFabList,
+  IonFabButton,
+  IonAlert
+} from '@ionic/react';
 import './SchedulePage.css';
+import { withLifeCycle } from './IonLifeCycle';
 
-
-type Props =  RouteComponentProps<{}> & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
+type Props = RouteComponentProps<{}> & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
 
 type State = {
-  segment: string,
-  isRefreshing: boolean,
-  showLoading: boolean,
-  showFilterModal: boolean,
-  loadingMessage: string
-}
+  segment: string;
+  isRefreshing: boolean;
+  showLoading: boolean;
+  showFilterModal: boolean;
+  loadingMessage: string;
+};
 
 class SchedulePage extends Component<Props, State> {
-  ionRefresherRef: React.RefObject<HTMLIonRefresherElement>
-  ionFabRef: React.RefObject<HTMLIonFabElement>
+
+  ionRefresherRef: React.RefObject<HTMLIonRefresherElement>;
+  ionFabRef: React.RefObject<HTMLIonFabElement>;
   state = {
     segment: 'all',
     isRefreshing: false,
     showLoading: false,
     showFilterModal: false,
     loadingMessage: ''
+  };
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter from Schedule Page!');
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter from Schedule Page!');
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave from Schedule Page!');
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave from Schedule Page!');
   }
 
   constructor(props: Props) {
@@ -35,15 +72,37 @@ class SchedulePage extends Component<Props, State> {
     this.ionFabRef = React.createRef<HTMLIonFabElement>();
   }
 
+  componentDidMount() {
+
+  }
+
+  componentWillUnmount() {
+    console.log('unmount in sched page');
+  }
+
+  // ionViewWillEnter() {
+  //   console.log('in IVWE on schedule page!!!');
+  // }
+
+  // ionViewDidEnter(): void {
+  //   throw new Error('Method not implemented.');
+  // }
+  // ionViewWillLeave(): void {
+  //   throw new Error('Method not implemented.');
+  // }
+  // ionViewDidLeave(): void {
+  //   throw new Error('Method not implemented.');
+  // }
+
   presentFilter = () => {
     this.setState(() => ({
       showFilterModal: true
     }));
-  }
+  };
 
   updateSearchTerm = (e: CustomEvent) => {
     this.props.setSearchText(e.detail.value);
-  }
+  };
 
   openSocial = (network: string) => {
     this.setState(() => ({
@@ -52,29 +111,29 @@ class SchedulePage extends Component<Props, State> {
     }));
 
     setTimeout(() => {
-      this.setState(() => ({ showLoading: false}))
-    }, (Math.random() * 1000) + 500);
+      this.setState(() => ({ showLoading: false }));
+    }, Math.random() * 1000 + 500);
 
     if (this.ionFabRef.current) {
       this.ionFabRef.current.close();
     }
-  }
+  };
 
   updateSegment = (e: CustomEvent) => {
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       ...prevState,
       segment: e.detail.value
     }));
-  }
+  };
 
   doRefresh = () => {
     setTimeout(() => {
-      this.setState(() => ({ 'isRefreshing': true }));
+      this.setState(() => ({ isRefreshing: true }));
       if (this.ionRefresherRef.current) {
         this.ionRefresherRef.current.complete();
       }
     }, 500);
-  }
+  };
 
   render() {
     return (
@@ -82,7 +141,7 @@ class SchedulePage extends Component<Props, State> {
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start">
-              <IonMenuButton></IonMenuButton>
+              <IonMenuButton />
             </IonButtons>
 
             <IonSegment onIonChange={this.updateSegment}>
@@ -96,7 +155,7 @@ class SchedulePage extends Component<Props, State> {
 
             <IonButtons slot="end">
               <IonButton onClick={this.presentFilter}>
-                <IonIcon name="options" slot="icon-only"></IonIcon>
+                <IonIcon name="options" slot="icon-only" />
               </IonButton>
             </IonButtons>
           </IonToolbar>
@@ -105,44 +164,43 @@ class SchedulePage extends Component<Props, State> {
             <IonSearchbar
               placeholder="Search"
               onIonChange={(e: CustomEvent) => this.props.setSearchText(e.detail.value)}
-            >
-            </IonSearchbar>
+            />
           </IonToolbar>
         </IonHeader>
 
         <IonContent>
           <IonRefresher ref={this.ionRefresherRef} onIonRefresh={this.doRefresh}>
-            <IonRefresherContent></IonRefresherContent>
+            <IonRefresherContent />
           </IonRefresher>
           <IonToast
             isOpen={this.state.isRefreshing}
             message="Updating content"
             showCloseButton={true}
             duration={2000}
-            onDidDismiss={() => this.setState(() => ({ 'isRefreshing': false }))}
-          ></IonToast>
+            onDidDismiss={() => this.setState(() => ({ isRefreshing: false }))}
+          />
 
           <SessionList
             sessions={this.props.allFiltered}
-            listType={"all"}
-            hidden={this.state.segment === "favorites"}
+            listType={'all'}
+            hidden={this.state.segment === 'favorites'}
           />
           <SessionList
             sessions={this.props.favoritesFiltered}
-            listType={"favorites"}
-            hidden={this.state.segment === "all"}
+            listType={'favorites'}
+            hidden={this.state.segment === 'all'}
           />
         </IonContent>
 
         <IonModal
           isOpen={this.state.showFilterModal}
-          onDidDismiss={() => this.setState(() => ({ showFilterModal: false}))}
+          onDidDismiss={() => this.setState(() => ({ showFilterModal: false }))}
         >
           <SessionListFilter
             filteredTracks={this.props.filteredTracks}
             allTracks={this.props.allTracks}
             updateTrackFilters={this.props.updateTrackFilters}
-            dismissModal={() => this.setState(() => ({ showFilterModal: false}))}
+            dismissModal={() => this.setState(() => ({ showFilterModal: false }))}
           />
         </IonModal>
 
@@ -150,24 +208,24 @@ class SchedulePage extends Component<Props, State> {
           isOpen={this.state.showLoading}
           message={this.state.loadingMessage}
           duration={2000}
-          onDidDismiss={() => this.setState(() => ({ 'showLoading': false }))}
+          onDidDismiss={() => this.setState(() => ({ showLoading: false }))}
         />
         <IonFab ref={this.ionFabRef} slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton>
-            <IonIcon name="share"></IonIcon>
+            <IonIcon name="share" />
           </IonFabButton>
           <IonFabList side="top">
             <IonFabButton color="vimeo" onClick={() => this.openSocial('Vimeo')}>
-              <IonIcon name="logo-vimeo"></IonIcon>
+              <IonIcon name="logo-vimeo" />
             </IonFabButton>
             <IonFabButton color="google" onClick={() => this.openSocial('Google+')}>
-              <IonIcon name="logo-googleplus"></IonIcon>
+              <IonIcon name="logo-googleplus" />
             </IonFabButton>
             <IonFabButton color="twitter" onClick={() => this.openSocial('Twitter')}>
-              <IonIcon name="logo-twitter"></IonIcon>
+              <IonIcon name="logo-twitter" />
             </IonFabButton>
             <IonFabButton color="facebook" onClick={() => this.openSocial('Facebook')}>
-              <IonIcon name="logo-facebook"></IonIcon>
+              <IonIcon name="logo-facebook" />
             </IonFabButton>
           </IonFabList>
         </IonFab>
@@ -188,9 +246,9 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = {
   setSearchText: (searchText: string) => actions.sessions.setSearchText(searchText),
   updateTrackFilters: (trackList: string[]) => actions.sessions.updateTrackFilters(trackList)
-}
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SchedulePage);
+)(withLifeCycle(SchedulePage));

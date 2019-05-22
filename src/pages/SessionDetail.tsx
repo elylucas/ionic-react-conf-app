@@ -5,47 +5,65 @@ import { RootState } from '../store';
 import formatTime from '../utils/formatTime';
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent, IonTitle } from '@ionic/react';
 import './SessionDetail.css';
+import { withLifeCycle } from './IonLifeCycle';
 
-type Props = RouteComponentProps<{ id: string, tab: string }> & ReturnType<typeof mapStateToProps> & {
-  goBack: () => void
-};
+type Props = RouteComponentProps<{ id: string; tab: string }> &
+  ReturnType<typeof mapStateToProps> & {
+    goBack: () => void;
+  };
 
-const SessionDetail: React.SFC<Props> = ({ sessions, speakers, match, goBack }) => {
-  const session = sessions.find(s => s.id === parseInt(match.params.id, 10));
-  if (session == null) {
-    return null;
+export class SessionDetail extends React.Component<Props> {
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter from Detail Page!');
   }
-  const sessionSpeakers = speakers.filter(s => session.speakerIds.indexOf(s.id) !== -1);
 
-  return (
-    <>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton goBack={goBack} defaultHref={`/${match.params.tab}`} />
-          </IonButtons>
-          <IonTitle>{session.name}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter from Detail Page!');
+  }
 
-      <IonContent padding>
-        <div>
-          <h1>{session.name}</h1>
-          {sessionSpeakers.map(speaker => (
-            <h4 key={speaker.name}>
-              {speaker.name}
-            </h4>
-          ))}
-          <p>
-            {formatTime(session.dateTimeStart, "h:MM a")} &mdash;&nbsp;
-            {formatTime(session.dateTimeEnd, "h:MM a")}
-          </p>
-          <p>{session.location}</p>
-          <p>{session.description}</p>
-        </div>
-      </IonContent>
-    </>
-  );
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave from Detail Page!');
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave from Detail Page!');
+  }
+  render() {
+    const { sessions, speakers, match, goBack } = this.props;
+    const session = sessions.find(s => s.id === parseInt(match.params.id, 10));
+    if (session == null) {
+      return null;
+    }
+    const sessionSpeakers = speakers.filter(s => session.speakerIds.indexOf(s.id) !== -1);
+
+    return (
+      <>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonBackButton goBack={goBack} defaultHref={`/${match.params.tab}`} />
+            </IonButtons>
+            <IonTitle>{session.name}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+
+        <IonContent padding>
+          <div>
+            <h1>{session.name}</h1>
+            {sessionSpeakers.map(speaker => (
+              <h4 key={speaker.name}>{speaker.name}</h4>
+            ))}
+            <p>
+              {formatTime(session.dateTimeStart, 'h:MM a')} &mdash;&nbsp;
+              {formatTime(session.dateTimeEnd, 'h:MM a')}
+            </p>
+            <p>{session.location}</p>
+            <p>{session.description}</p>
+          </div>
+        </IonContent>
+      </>
+    );
+  }
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -53,6 +71,4 @@ const mapStateToProps = (state: RootState) => ({
   speakers: state.speakers.speakers
 });
 
-export default connect(
-  mapStateToProps
-)(SessionDetail)
+export default connect(mapStateToProps)(withLifeCycle(SessionDetail));
