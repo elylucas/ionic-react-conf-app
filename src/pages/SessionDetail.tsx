@@ -1,11 +1,10 @@
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, withIonLifeCycle } from '@ionic/react';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { RootState } from '../store';
 import formatTime from '../utils/formatTime';
-import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonContent, IonTitle } from '@ionic/react';
 import './SessionDetail.css';
-import { withLifeCycle } from './IonLifeCycle';
 
 type Props = RouteComponentProps<{ id: string; tab: string }> &
   ReturnType<typeof mapStateToProps> & {
@@ -47,7 +46,7 @@ export class SessionDetail extends React.Component<Props> {
           </IonToolbar>
         </IonHeader>
 
-        <IonContent padding>
+        <IonContent className="ion-padding">
           <div>
             <h1>{session.name}</h1>
             {sessionSpeakers.map(speaker => (
@@ -71,4 +70,4 @@ const mapStateToProps = (state: RootState) => ({
   speakers: state.speakers.speakers
 });
 
-export default connect(mapStateToProps)(withLifeCycle(SessionDetail));
+export default connect(mapStateToProps)(withIonLifeCycle(SessionDetail));

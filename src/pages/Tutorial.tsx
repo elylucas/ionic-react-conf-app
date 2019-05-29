@@ -88,7 +88,7 @@ class Tutorial extends Component<Props, State> {
               </h2>
               <IonButton fill="clear" onClick={this.endTutorial}>
                 Continue
-                <IonIcon slot="end" name="arrow-forward"></IonIcon>
+                {/* <IonIcon slot="end" name="arrow-forward"></IonIcon> */}
               </IonButton>
             </IonSlide>
           </IonSlides>

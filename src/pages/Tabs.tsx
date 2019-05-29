@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { IonIcon, IonTabs, IonTab, IonTabBar, IonTabButton, IonLabel } from '@ionic/react';
 
 export default class Tabs extends Component {
+
+  ionViewWillEnter() {
+    console.log('ionviewwillenter from tabs');
+  }
   render() {
     return (
       <IonTabs>
@@ -13,19 +17,19 @@ export default class Tabs extends Component {
         <IonTabBar slot="bottom">
           <IonTabButton tab="schedule">
             <IonLabel>Schedule</IonLabel>
-            <IonIcon name="schedule"></IonIcon>
+            {/* <IonIcon name="schedule"></IonIcon> */}
           </IonTabButton>
           <IonTabButton tab="speakers">
             <IonLabel>Speakers</IonLabel>
-            <IonIcon name="speakers"></IonIcon>
+            {/* <IonIcon name="speakers"></IonIcon> */}
           </IonTabButton>
           <IonTabButton tab="map">
             <IonLabel>Map</IonLabel>
-            <IonIcon name="map"></IonIcon>
+            {/* <IonIcon name="map"></IonIcon> */}
           </IonTabButton>
           <IonTabButton tab="about">
             <IonLabel>About</IonLabel>
-            <IonIcon name="about"></IonIcon>
+            {/* <IonIcon name="about"></IonIcon> */}
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

@@ -33,7 +33,7 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
       .map((p) => (
         <IonMenuToggle key={p.title} auto-hide="false">
           <IonItem button onClick={() => history.push(p.path)}>
-            <IonIcon slot="start" name={p.icon}></IonIcon>
+            {/* <IonIcon lazy slot="start" name={p.icon}></IonIcon> */}
             <IonLabel>
               {p.title}
             </IonLabel>
@@ -69,7 +69,7 @@ const Menu: React.SFC<Props> = ({ isAuthenticated, history }) => {
             Tutorial
           </IonListHeader>
           <IonItem onClick={() => {}}>
-            <IonIcon slot="start" name="hammer"></IonIcon>
+            {/* <IonIcon slot="start" name="hammer"></IonIcon> */}
             Show Tutorial
           </IonItem>
         </IonList>

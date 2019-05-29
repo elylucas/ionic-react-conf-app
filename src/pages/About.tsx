@@ -47,7 +47,7 @@ class About extends Component<Props, State> {
             <IonTitle>About</IonTitle>
             <IonButtons slot="end">
               <IonButton icon-only onClick={this.presentPopover}>
-                <IonIcon slot="icon-only" name="more"></IonIcon>
+                {/* <IonIcon slot="icon-only" name="more"></IonIcon> */}
               </IonButton>
             </IonButtons>
           </IonToolbar>
@@ -72,13 +72,13 @@ class About extends Component<Props, State> {
 
             <IonList lines="none">
               <IonItem>
-                <IonIcon name="calendar" slot="start"></IonIcon>
+                {/* <IonIcon name="calendar" slot="start"></IonIcon> */}
                 <IonLabel>Date</IonLabel>
                 <IonDatetime displayFormat="MMM DD, YYYY" max="2056" value={this.props.conferenceDate}></IonDatetime>
               </IonItem>
 
               <IonItem>
-                <IonIcon name="pin" slot="start"></IonIcon>
+                {/* <IonIcon name="pin" slot="start"></IonIcon> */}
                 <IonLabel>Location</IonLabel>
                 <IonSelect>
                   <IonSelectOption value="madison" selected>Madison, WI</IonSelectOption>

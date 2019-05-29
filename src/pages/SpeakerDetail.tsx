@@ -26,18 +26,18 @@ const SpeakerDetail: React.SFC<Props> = ({ speakers, match, goBack }) => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent padding class="speaker-detail speaker-page-list">
+      <IonContent class="speaker-detail speaker-page-list ion-padding">
         <div>
           <img src={speaker.profilePic} alt={speaker.name}/>
           <br/>
           <IonButton icon-only color="twitter">
-            <IonIcon name="logo-twitter"></IonIcon>
+            {/* <IonIcon name="logo-twitter"></IonIcon> */}
           </IonButton>
           <IonButton icon-only color="github">
-            <IonIcon name="logo-github"></IonIcon>
+            {/* <IonIcon name="logo-github"></IonIcon> */}
           </IonButton>
           <IonButton icon-only color="instagram">
-            <IonIcon name="logo-instagram"></IonIcon>
+            {/* <IonIcon name="logo-instagram"></IonIcon> */}
           </IonButton>
         </div>
 

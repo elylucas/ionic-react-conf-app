@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import { RootState, selectors, actions } from '../store';
 import SessionList from '../components/SessionList';
 import SessionListFilter from '../components/SessionListFilter';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import {
   IonModal,
   IonLoading,
   IonToast,
-  IonIcon,
   IonHeader,
   IonToolbar,
   IonButtons,
@@ -23,10 +22,9 @@ import {
   IonFab,
   IonFabList,
   IonFabButton,
-  IonAlert
-} from '@ionic/react';
+  IonIcon,
+  withIonLifeCycle} from '@ionic/react';
 import './SchedulePage.css';
-import { withLifeCycle } from './IonLifeCycle';
 
 type Props = RouteComponentProps<{}> & typeof mapDispatchToProps & ReturnType<typeof mapStateToProps>;
 
@@ -79,20 +77,6 @@ class SchedulePage extends Component<Props, State> {
   componentWillUnmount() {
     console.log('unmount in sched page');
   }
-
-  // ionViewWillEnter() {
-  //   console.log('in IVWE on schedule page!!!');
-  // }
-
-  // ionViewDidEnter(): void {
-  //   throw new Error('Method not implemented.');
-  // }
-  // ionViewWillLeave(): void {
-  //   throw new Error('Method not implemented.');
-  // }
-  // ionViewDidLeave(): void {
-  //   throw new Error('Method not implemented.');
-  // }
 
   presentFilter = () => {
     this.setState(() => ({
@@ -155,7 +139,7 @@ class SchedulePage extends Component<Props, State> {
 
             <IonButtons slot="end">
               <IonButton onClick={this.presentFilter}>
-                <IonIcon name="options" slot="icon-only" />
+                {/* <IonIcon name="options" slot="icon-only" /> */}
               </IonButton>
             </IonButtons>
           </IonToolbar>
@@ -212,20 +196,20 @@ class SchedulePage extends Component<Props, State> {
         />
         <IonFab ref={this.ionFabRef} slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton>
-            <IonIcon name="share" />
+            {/* <IonIcon name="share" /> */}
           </IonFabButton>
           <IonFabList side="top">
             <IonFabButton color="vimeo" onClick={() => this.openSocial('Vimeo')}>
-              <IonIcon name="logo-vimeo" />
+              {/* <IonIcon name="logo-vimeo" /> */}
             </IonFabButton>
             <IonFabButton color="google" onClick={() => this.openSocial('Google+')}>
-              <IonIcon name="logo-googleplus" />
+              {/* <IonIcon name="logo-googleplus" /> */}
             </IonFabButton>
             <IonFabButton color="twitter" onClick={() => this.openSocial('Twitter')}>
-              <IonIcon name="logo-twitter" />
+              {/* <IonIcon name="logo-twitter" /> */}
             </IonFabButton>
             <IonFabButton color="facebook" onClick={() => this.openSocial('Facebook')}>
-              <IonIcon name="logo-facebook" />
+              {/* <IonIcon name="logo-facebook" /> */}
             </IonFabButton>
           </IonFabList>
         </IonFab>
@@ -251,4 +235,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLifeCycle(SchedulePage));
+)(withIonLifeCycle(SchedulePage));
